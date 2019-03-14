@@ -108,7 +108,7 @@ def main():
         print('DISALLOWED!!!')
         print('REASON: {}'.format(json_data['disallow_reason']))
         print('DESCRIPTION: {}'.format(json_data['disallow_description']))
-        annotations = '-l DISALLOWED_REASON="{}" -l DISALLOWED_ESCRIPTION="{}" -l SECURITY_SCAN=false'.format(json_data['disallow_reason'], json_data['disallow_description'])
+        annotations = '-l DISALLOWED_REASON="{}" -l DISALLOWED_DESCRIPTION="{}" -l SECURITY_SCAN=false'.format(json_data['disallow_reason'], json_data['disallow_description'])
         annotate_image(full_docker_image, annotations)
         sys.exit(1)
     else:
