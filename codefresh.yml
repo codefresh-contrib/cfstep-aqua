@@ -3,7 +3,7 @@ steps:
   BuildingDockerImage:
     title: Building Docker Image
     type: build
-    image_name: codefresh/cfstep-aqua
+    image_name: codefreshplugins/cfstep-aqua
     working_directory: ./
     tag: latest
     dockerfile: Dockerfile
