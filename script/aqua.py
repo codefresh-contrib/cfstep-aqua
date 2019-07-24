@@ -66,13 +66,9 @@ def main():
 
     r = requests.post(aqua_login_endpoint, json={'id':aqua_username,'password':aqua_password}, headers=headers)
 
-    print(r.text)
-
     json_data = json.loads(r.text)
 
     jwt_token = json_data['token']
-
-    print(jwt_token)
 
     headers = {"Authorization": "Bearer {}".format(jwt_token)}
     
