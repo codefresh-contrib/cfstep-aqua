@@ -115,7 +115,7 @@ def main():
 
     uri_docker_image = '{}~2F{}/{}'.format(cf_account, image.replace('/', '~2F'), tag)
 
-    annotations = '-l AQUA_REPORT="{}/#!/app/images/{}/{}" {}'.format(aqua_host, registry, uri_docker_image, annotation_list)
+    annotations = '-l AQUA_REPORT="{}/ng#!/app/images/{}/{}" {}'.format(aqua_host, registry, uri_docker_image, annotation_list)
 
     full_docker_image = '{}:{}'.format(image, tag)
     annotate_image(full_docker_image, annotations)
