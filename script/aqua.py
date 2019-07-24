@@ -99,7 +99,6 @@ def main():
     while not status:
         r = requests.get('{}/status'.format(aqua_endpoint), headers=headers)
         json_data = json.loads(r.text)
-        print(json_data)
         if json_data['status'] == 'Scanned':
             status = True
         else:
