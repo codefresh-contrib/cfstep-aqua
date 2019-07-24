@@ -56,6 +56,25 @@ def main():
         # "password": "SuperSecret"
         # }
 
+    aqua_login_endpoint = '{}/api/v1/login'.format(aqua_host)
+
+    headers = {'Content-Type': "application/json",
+               'Accept': "*/*",
+               'Cache-Control': "no-cache",
+               'Host': "35.239.33.88:8080"
+               }
+
+    r = requests.post(aqua_login_endpoint, json={'id':aqua_username,'password':aqua_password}, headers=headers)
+
+    print(r.text)
+
+    json_data = json.loads(r.text)
+
+    jwt_token = json_data['token']
+
+    print(jwt_token)
+
+    headers = {"Authorization": "Bearer {}".format(jwt_token)}
     
     full_docker_image = '{}/{}'.format(cf_account, image)
     encoded_docker_image = urllib.parse.quote(full_docker_image, safe='')
@@ -68,7 +87,7 @@ def main():
         # POST /api/v1/scanner/registry/Docker%20Hub/image/mongo:latest/scan HTTP/1.1
         # Accept: application/json
 
-    r = requests.post('{}/scan'.format(aqua_endpoint), auth=(aqua_username, aqua_password))
+    r = requests.post('{}/scan'.format(aqua_endpoint), headers=headers)
     json_data = json.loads(r.text)
 
     # Wait for Scan to Complete
@@ -78,7 +97,7 @@ def main():
     status = False
 
     while not status:
-        r = requests.get('{}/status'.format(aqua_endpoint), auth=(aqua_username, aqua_password))
+        r = requests.get('{}/status'.format(aqua_endpoint), headers=headers)
         json_data = json.loads(r.text)
         print(json_data)
         if json_data['status'] == 'Scanned':
@@ -90,7 +109,7 @@ def main():
         # GET /api/v1/scanner/registry/Docker%20Hub/image/mongo:latest/scan_result
         # Accept: application/json
 
-    r = requests.get('{}/scan_result'.format(aqua_endpoint), auth=(aqua_username, aqua_password))
+    r = requests.get('{}/scan_result'.format(aqua_endpoint), headers=headers)
     json_data = json.loads(r.text)
 
     annotation_list = create_annotation_list(json_data['cves_counts'])
